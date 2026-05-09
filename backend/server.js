@@ -5,6 +5,7 @@ const helmet = require('helmet');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
+const kyroRoutes = require('./routes/kyro');
 
 const app = express();
 
@@ -15,15 +16,13 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/kyro', kyroRoutes);
 
-// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Kyro is running' });
 });
 
-// Connect to MongoDB then start server
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB');
